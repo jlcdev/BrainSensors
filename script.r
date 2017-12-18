@@ -52,3 +52,24 @@ plot.mean <- function (class)
 plot.mean ('1')
 plot.mean ('2')
 plot.mean ('3')
+
+s1.qda.model <- qda(C ~ ., data = s1.train)
+s1.qda.pred <- predict(s1.qda.model)
+table(s1.train$C, s1.qda.pred$class)
+s1.qda.predcv <- update(s1.qda.model, CV=TRUE)
+
+library(klaR)
+
+s1.rda.model <- rda (C ~ ., data = s1.train)
+
+library(e1071)
+
+set.seed(1111)
+N <- nrow(s1.train)
+s1.nb.learn <- sample(1:N, round(2*N/3))
+nlearn <- length(s1.nb.learn)
+ntest <- N - nlearn
+s1.nb.model <- naiveBayes(C ~ ., data = s1.train[s1.nb.learn,])
+s1.nb.pred <- predict(s1.nb.model, s1.train[s1.nb.learn,-1])
+table(s1.nb.pred, s1.train[s1.nb.learn,]$C) 
+
