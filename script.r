@@ -41,3 +41,14 @@ lda.s1.model <- lda (C ~ ., data = s1.train)
 s1.lda.pred <- predict(lda.s1.model)
 plot(s1.lda.pred$x,type="n")
 text(s1.lda.pred$x,labels=as.character(rownames(s1.lda.pred$x)),col=as.integer(s1.train$C))
+
+plot.mean <- function (class)
+{
+  m1 <- mean(subset(s1.lda.pred$x[,1],s1.train$C==class))
+  m2 <- mean(subset(s1.lda.pred$x[,2],s1.train$C==class))
+  print(c(m1,m2))
+  points(m1,m2,pch=16,cex=2,col=as.integer(class))
+}
+plot.mean ('1')
+plot.mean ('2')
+plot.mean ('3')
