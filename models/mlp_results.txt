@@ -4,3 +4,6 @@ size:15 decay:0.5 accuracy:96 subject:1
 
 size:10 decay: 0.001 accuracy:90 subject:2
 size:15 decay: 0.010 accuracy:94 subject:2
+
+size:10 decay: 0.01 accuracy:93 subject:3
+size:15 decay: 0.00 accuracy:97 subject:3
