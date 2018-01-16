@@ -2,9 +2,9 @@ library(dplyr)
 library(randomForest)
 set.seed(13)
 
-s1.train1 = read.csv("data/train_subject3_raw01.asc", header = FALSE, sep="")
-s1.train2 = read.csv("data/train_subject3_raw02.asc", header = FALSE, sep="")
-s1.train3 = read.csv("data/train_subject3_raw03.asc", header = FALSE, sep="")
+s1.train1 = read.csv("data/train_subject2_raw01.asc", header = FALSE, sep="")
+s1.train2 = read.csv("data/train_subject2_raw02.asc", header = FALSE, sep="")
+s1.train3 = read.csv("data/train_subject2_raw03.asc", header = FALSE, sep="")
 
 s1.train = rbind(s1.train1, s1.train2)
 s1.train = rbind(s1.train, s1.train3)
@@ -36,8 +36,8 @@ computeRandomForest <- function(data,sid, trees=round(10^seq(1,3,by=0.2))){
 }
 
 #get best Random Forest model using loaded data.
-model = getRF(s1.train, sid)
-save(model, file="models/randomForest_16_5_s1.model")
+model = computeRandomForest(s1.train, sid)
+save(model, file="models/randomForest_16_5_s2.model")
 
 #show obtained model
 print(model)
