@@ -24,4 +24,8 @@ pred <- predict(model, test)
 
 tab <- table(test$C, pred)
 tab
-(error <- 100*(1-sum(tab[row(tab)==col(tab)])/sum(tab)))
+error <- 100*(1-sum(tab[row(tab)==col(tab)])/sum(tab))
+error
+
+
+
