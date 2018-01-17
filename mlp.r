@@ -21,8 +21,8 @@ train<-sample_frac(s1.train, 0.7)
 sid<-as.numeric(rownames(train))
 test<-s1.train[-sid,]
 
-decays <- c(0, 0.001, 0.01, 0.1, 0.5)
-trc <- trainControl (method="repeatedcv", number=10, repeats=5)
+#decays <- c(0, 0.001, 0.01, 0.1, 0.5)
+#trc <- trainControl (method="repeatedcv", number=10, repeats=5)
 
 for (i in 1:32)
 {
@@ -30,18 +30,22 @@ for (i in 1:32)
   test[,i] <- scale(test[,i])
 }
 
+#For find best parameters
+#cl <- makeCluster(detectCores())
+#registerDoParallel(cl)
+#model <- train(C~., data = train, method = 'nnet', maxit = 100, trace = FALSE, 
+#tuneGrid = expand.grid(.size=2, .decay=decays), trControl = trc)
+#stopCluster(cl)
+#model$bestTune
+#model$results
 
-cl <- makeCluster(detectCores())
-registerDoParallel(cl)
-model <- train(C~., data = train, method = 'nnet', maxit = 100, trace = FALSE, 
-tuneGrid = expand.grid(.size=2, .decay=decays), trControl = trc)
-stopCluster(cl)
-model$bestTune
-model$results
+model <- nnet(C ~., data=train, size=15, maxit=5000, decay=0.5)
 
-save(model, file="model/mlp_2_0.5_71_S1.model")
-pred.train <- as.factor(predict (model, newdata=test))
-t1 <- table(pred.train,test$C)
+#load("models/mlp_15_0.5_s1.model")
+#save(model, file="models/mlp_15_0.5_s1.model")
+
+pred.train <- as.factor(predict (model, type="class"))
+t1 <- table(pred.train,train$C)
 t1
 (error <- 100*(1-sum(t1[row(t1)==col(t1)])/sum(t1)))
 
