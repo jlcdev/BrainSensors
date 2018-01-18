@@ -22,17 +22,17 @@ test<-s1.train[-sid,]
 #Posible trees: 10   16   25   40   63  100  158  251  398  631 1000
 computeRandomForest <- function(data,sid, trees=round(10^seq(1,3,by=0.2))){
   train <- data[sid,]
-  result <- matrix (rep(0,2*length(trees)), nrow=length(trees))
-  result[,1] <- trees
-  result[,2] <- 0
+  m <- matrix (rep(0,2*length(trees)), nrow=length(trees))
+  m[,1] <- trees
+  m[,2] <- 0
   
   for(t in trees){
     model <- randomForest(C ~.,data=train,ntree=t,proximity=F)
-    result[1,2] <- model$err.rate[t,1]
+    m[1,2] <- model$err.rate[t,1]
   }
   
-  lowError <- as.integer(which.min(result[,2]))
-  modelResult <- randomForest(C ~ ., data = train, ntree=result[lowError,1], proximity=F)
+  le <- as.integer(which.min(m[,2]))
+  modelResult <- randomForest(C ~ ., data = train, ntree=m[le,1], proximity=F)
   return(modelResult)
 }
 
