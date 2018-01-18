@@ -19,6 +19,7 @@ sid<-as.numeric(rownames(train))
 test<-s1.train[-sid,]
 
 #Get best Random Forest model computing all between 10 and 1000 and select 
+#Posible trees: 10   16   25   40   63  100  158  251  398  631 1000
 computeRandomForest <- function(data,sid, trees=round(10^seq(1,3,by=0.2))){
   train <- data[sid,]
   result <- matrix (rep(0,2*length(trees)), nrow=length(trees))
